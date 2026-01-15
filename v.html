@@ -6,23 +6,14 @@
 </head>
 <body>
     <script>
-        // 1. Get the data from the URL ?d=...
-        const suitcase = new URLSearchParams(window.location.search).get('d');
-        
-        if (suitcase) {
-            const data = UrURL.unpack(suitcase);
-            if (data) {
-                // 2. Store the data temporarily in sessionStorage
-                sessionStorage.setItem('profileData', JSON.stringify(data));
-                
-                // 3. Forward to the design file
-                window.location.replace("p1.html");
-            } else {
-                document.body.innerHTML = "Invalid Profile Data.";
-            }
-        } else {
-            document.body.innerHTML = "No Data Received.";
-        }
-    </script>
+    const suitcase = new URLSearchParams(window.location.search).get('d');
+    if (suitcase) {
+        // Instead of sessionStorage, pass the 'd' parameter to p1.html
+        window.location.replace("p1.html?d=" + suitcase);
+    } else {
+        document.body.innerHTML = "No Data Received.";
+    }
+</script>
 </body>
 </html>
+
