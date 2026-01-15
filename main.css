@@ -1,16 +1,173 @@
-:root { --navy: #0A1A3C; --cyan: #00E8FF; }
-* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-body { background: #f0f4f8; color: #333; }
-.container { display: flex; flex-wrap: wrap; min-height: 100vh; }
-.creator-side { flex: 1; padding: 40px; background: white; min-width: 380px; border-right: 1px solid #ddd; }
-.preview-side { flex: 1; padding: 40px; background: var(--navy); display: flex; justify-content: center; align-items: center; }
-input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; }
-.main-btn { background: var(--navy); color: var(--cyan); padding: 15px; border: none; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
-.phone { width: 280px; height: 540px; background: white; border: 8px solid #333; border-radius: 35px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-.p-header { background: var(--navy); color: white; padding: 30px 15px; text-align: center; }
-#p-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--cyan); margin: 0 auto 10px; background-size: cover; background-position: center; background-color: #eee; }
-.p-body { padding: 20px; text-align: center; }
-.pre-btn { display: none; padding: 10px; border: 1px solid #eee; border-radius: 6px; margin-bottom: 8px; font-size: 11px; color: var(--navy); font-weight: bold; }
-#qr-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 100; }
-.modal { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
-.hidden { display: none !important; }
+/* 1. VARIABLES & RESET */
+:root { 
+    --navy: #0A1A3C; 
+    --cyan: #00E8FF; 
+    --gray: #f0f4f8;
+}
+
+* { 
+    box-sizing: border-box; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    background: var(--gray); 
+    color: #333; 
+}
+
+/* 2. LAYOUT: SPLIT SCREEN */
+.container { 
+    display: flex; 
+    flex-wrap: wrap; 
+    min-height: 100vh; 
+}
+
+.creator-side { 
+    flex: 1; 
+    padding: 40px; 
+    background: white; 
+    min-width: 380px; 
+    border-right: 1px solid #ddd; 
+}
+
+.preview-side { 
+    flex: 1; 
+    padding: 40px; 
+    background: var(--navy); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+/* 3. FORM ELEMENTS */
+input, textarea, select { 
+    width: 100%; 
+    padding: 12px; 
+    margin-bottom: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    font-size: 14px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.main-btn { 
+    background: var(--navy); 
+    color: var(--cyan); 
+    padding: 15px; 
+    border: none; 
+    border-radius: 8px; 
+    width: 100%; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: 0.2s;
+}
+
+.main-btn:hover {
+    filter: brightness(1.2);
+}
+
+/* 4. PHONE MOCKUP */
+.phone { 
+    width: 280px; 
+    height: 540px; 
+    background: white; 
+    border: 8px solid #333; 
+    border-radius: 35px; 
+    overflow-y: auto; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
+    position: relative;
+}
+
+.p-header { 
+    background: var(--navy); 
+    color: white; 
+    padding: 30px 15px; 
+    text-align: center; 
+}
+
+#p-img { 
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%; 
+    border: 2px solid var(--cyan); 
+    margin: 0 auto 10px; 
+    background-size: cover; 
+    background-position: center; 
+    background-color: #eee; 
+}
+
+/* 5. PREVIEW TEXT & OVERFLOW FIXES */
+.p-body { 
+    padding: 20px; 
+    text-align: center; 
+}
+
+#p-n, #p-b {
+    word-break: break-word; /* Fix for long words */
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+#p-n {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+/* 6. DYNAMIC PREVIEW BUTTONS */
+.pre-btn { 
+    display: none; /* Hidden until JS shows them */
+    padding: 10px; 
+    border: 1px solid #eee; 
+    border-radius: 6px; 
+    margin-bottom: 8px; 
+    font-size: 11px; 
+    color: var(--navy); 
+    font-weight: bold; 
+    text-align: center;
+}
+
+/* 7. MODAL & OVERLAY */
+#qr-overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.85); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 100; 
+}
+
+.modal { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 20px; 
+    width: 90%; 
+    max-width: 400px; 
+    text-align: center; 
+}
+
+/* 8. UTILITY */
+.hidden { 
+    display: none !important; 
+}
+
+/* Scrollbar styling for the phone mockup */
+.phone::-webkit-scrollbar {
+    width: 4px;
+}
+.phone::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
