@@ -1,0 +1,16 @@
+:root { --navy: #0A1A3C; --cyan: #00E8FF; }
+* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+body { background: #f0f4f8; color: #333; }
+.container { display: flex; flex-wrap: wrap; min-height: 100vh; }
+.creator-side { flex: 1; padding: 40px; background: white; min-width: 380px; border-right: 1px solid #ddd; }
+.preview-side { flex: 1; padding: 40px; background: var(--navy); display: flex; justify-content: center; align-items: center; }
+input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; }
+.main-btn { background: var(--navy); color: var(--cyan); padding: 15px; border: none; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
+.phone { width: 280px; height: 540px; background: white; border: 8px solid #333; border-radius: 35px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.p-header { background: var(--navy); color: white; padding: 30px 15px; text-align: center; }
+#p-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--cyan); margin: 0 auto 10px; background-size: cover; background-position: center; background-color: #eee; }
+.p-body { padding: 20px; text-align: center; }
+.pre-btn { display: none; padding: 10px; border: 1px solid #eee; border-radius: 6px; margin-bottom: 8px; font-size: 11px; color: var(--navy); font-weight: bold; }
+#qr-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 100; }
+.modal { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+.hidden { display: none !important; }

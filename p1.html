@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script src="ururl-core.js"></script>
+    <style> body { background: white; } .action-btn { display:none; background: var(--navy); color: var(--cyan); padding: 16px; margin-bottom: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; text-align: center; } </style>
+</head>
+<body>
+    <div class="p-header"><div id="p-img"></div><h2 id="p-n" style="text-align:center;"></h2></div>
+    <div class="p-body"><p id="p-b" style="text-align:center; color:#666; margin-bottom:30px;"></p>
+        <a id="lnk-l" class="action-btn" href="#">WEBSITE</a><a id="lnk-e" class="action-btn" href="#">EMAIL</a><a id="lnk-c" class="action-btn" href="#">CALL</a>
+    </div>
+    <script>
+        window.onload = () => {
+            const d = UrURL.unpack(new URLSearchParams(window.location.search).get('d'));
+            if(!d) return;
+            document.getElementById('p-n').innerText = d.name;
+            document.getElementById('p-b').innerText = d.bio;
+            if(d.photo) document.getElementById('p-img').style.backgroundImage = `url(${d.photo})`;
+            const set = (id, val, href) => { if(val) { const el=document.getElementById(id); el.style.display="block"; el.href=href; }};
+            set('lnk-l', d.link, d.link); set('lnk-e', d.email, `mailto:${d.email}`); set('lnk-c', d.contact, `tel:${d.contact}`);
+        };
+    </script>
+</body>
+</html>
