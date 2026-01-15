@@ -85,11 +85,10 @@ document.getElementById('upload-key').onchange = (e) => {
             document.getElementById('in-b').value = d.b; document.getElementById('in-l').value = d.l;
             document.getElementById('in-e').value = d.e; document.getElementById('in-c').value = d.c;
             document.getElementById('in-k').value = d.k; document.getElementById('in-w').value = d.w;
-            ['in-n', 'in-p', 'in-b', 'in-l', 'in-e', 'in-c', 'in-k', 'in-w'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.dispatchEvent(new Event('input')));
+            ['in-n', 'in-p', 'in-b', 'in-l', 'in-e', 'in-c'].forEach(id => document.getElementById(id).dispatchEvent(new Event('input')));
         }
     };
     reader.readAsText(file);
 };
+
 
