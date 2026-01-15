@@ -44,7 +44,16 @@ document.getElementById('btn-generate').onclick = () => {
     document.getElementById('qr-overlay').classList.remove('hidden');
 };
 
-// 4. DOWNLOADS
+// 4. QR EDITOR (The Missing Link)
+// This listens to the IDs in your Index and updates the QR instantly
+document.getElementById('qr-color').oninput = (e) => {
+    qrCode.update({ dotsOptions: { color: e.target.value } });
+};
+document.getElementById('qr-style').onchange = (e) => {
+    qrCode.update({ dotsOptions: { type: e.target.value } });
+};
+
+// 5. DOWNLOADS
 document.getElementById('dl-qr').onclick = () => qrCode.download({ name: "UrURL_QR" });
 document.getElementById('dl-key').onclick = () => {
     const data = { n:document.getElementById('in-n').value, p:document.getElementById('in-p').value, b:document.getElementById('in-b').value, l:document.getElementById('in-l').value, e:document.getElementById('in-e').value, c:document.getElementById('in-c').value, k:document.getElementById('in-k').value, w:document.getElementById('in-w').value };
@@ -53,7 +62,7 @@ document.getElementById('dl-key').onclick = () => {
     a.download = "UrURL_Key.txt"; a.click();
 };
 
-// 5. DATA RESTORE (The Fix)
+// 6. DATA RESTORE
 document.getElementById('upload-key').onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
