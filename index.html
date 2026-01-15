@@ -14,9 +14,9 @@
             <h1>UrURL Creator</h1>
             <p style="margin-bottom:20px; color:#666;">Enter details to build your digital identity.</p>
             
-            <div style="margin-bottom: 20px; padding: 10px; border: 1px dashed #ccc; border-radius: 8px;">
-                <label style="font-size: 12px; display: block; margin-bottom: 5px; font-weight: bold;">EDIT EXISTING PROFILE:</label>
-                <input type="file" id="upload-key" accept=".txt" style="font-size: 12px; margin-bottom: 0;">
+            <div style="margin-bottom: 20px; padding: 15px; border: 2px dashed #007AFF; border-radius: 8px; background: #f0f7ff;">
+                <label style="font-size: 12px; display: block; margin-bottom: 5px; font-weight: bold; color: #007AFF;">EDIT EXISTING PROFILE (Upload Key.txt):</label>
+                <input type="file" id="upload-key" accept=".txt" style="font-size: 12px; cursor: pointer;">
             </div>
             
             <div id="form-container">
@@ -44,9 +44,9 @@
                 </div>
                 <div class="p-body">
                     <p id="p-b" style="font-size:13px; color:#777; margin-bottom:15px;">Your bio will appear here.</p>
-                    <div id="pre-l" class="pre-btn">🌐 WEBSITE</div>
-                    <div id="pre-e" class="pre-btn">📧 EMAIL</div>
-                    <div id="pre-c" class="pre-btn">📞 CONTACT</div>
+                    <div id="pre-l" class="pre-btn hidden">🌐 WEBSITE</div>
+                    <div id="pre-e" class="pre-btn hidden">📧 EMAIL</div>
+                    <div id="pre-c" class="pre-btn hidden">📞 CONTACT</div>
                 </div>
             </div>
         </section>
@@ -60,13 +60,14 @@
             <div style="display:flex; gap:10px; margin-bottom:15px;">
                 <div style="flex:1;">
                     <label style="font-size:10px; display:block; text-align:left;">QR Color</label>
-                    <input type="color" id="qr-color" value="#0A1A3C" style="height:40px; padding:2px;">
+                    <input type="color" id="qr-color" value="#0A1A3C" style="height:40px; padding:2px; cursor:pointer;">
                 </div>
                 <div style="flex:1;">
                     <label style="font-size:10px; display:block; text-align:left;">Dot Style</label>
                     <select id="qr-style">
                         <option value="rounded">Rounded</option>
                         <option value="dots">Dots</option>
+                        <option value="extra-rounded">Extra-Rounded</option>
                         <option value="squares">Squares</option>
                     </select>
                 </div>
