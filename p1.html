@@ -6,7 +6,6 @@
     <title>UrURL | Profile</title>
     <link rel="stylesheet" href="main.css">
     <style>
-        /* 1. ANIMATED GRADIENT BACKGROUND */
         body { 
             background: linear-gradient(-45deg, #1a3c11, #254f1a, #2d6a1f, #1a3c11);
             background-size: 400% 400%;
@@ -34,7 +33,6 @@
             max-width: 450px; 
             text-align: center; 
             padding-bottom: 5vh; 
-            /* Subtle entrance for the whole profile */
             animation: fadeIn 0.8s ease-out;
         }
 
@@ -71,7 +69,7 @@
             padding: 0 20px;
         }
 
-        /* 2. BUTTON ANIMATIONS */
+        /* --- THE SHINE & COLOR SHIFT BUTTONS --- */
         .action-btn { 
             display: none; 
             background: #d2e823; 
@@ -84,10 +82,42 @@
             font-size: 16px; 
             border: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* Slide up animation */
-            animation: slideUp 0.5s ease forwards;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Added colorShift to the animation list */
+            animation: slideUp 0.5s ease forwards, colorShift 8s infinite alternate;
             opacity: 0;
+        }
+
+        /* Routine Color Loop */
+        @keyframes colorShift {
+            0% { background: #d2e823; color: #254f1a; }
+            50% { background: #b8cc1f; color: #1a3c11; }
+            100% { background: #e1f53e; color: #254f1a; }
+        }
+
+        .action-btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.6) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: routineShine 4s infinite;
+        }
+
+        @keyframes routineShine {
+            0% { left: -150%; }
+            20% { left: 150%; } 
+            100% { left: 150%; } 
         }
 
         @keyframes slideUp {
@@ -97,8 +127,7 @@
 
         .action-btn:hover { 
             transform: scale(1.03); 
-            background: #e1f53e;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(210, 232, 35, 0.4);
         }
 
         .action-btn:active { 
@@ -156,8 +185,8 @@
                             const el = document.getElementById(btn.id);
                             el.style.display = "block";
                             el.href = btn.href;
-                            // Add staggered delay for the slide-up effect
-                            el.style.animationDelay = `${delay}s`;
+                            // Combined delays for Entrance, Shine, and Color Shift
+                            el.style.animationDelay = `${delay}s, 0s, 0s`;
                             delay += 0.15;
                         }
                     });
