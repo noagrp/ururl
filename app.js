@@ -5,17 +5,24 @@ const qrCode = new QRCodeStyling({
     backgroundOptions: { color: "#ffffff" }
 });
 
-// 2. LIVE PREVIEW & CHAR COUNTER
+// 2. LIVE PREVIEW & CHAR COUNTER (WITH WRAP FIX)
 const sync = (id, target, isBtn = false) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.oninput = (e) => {
         const val = e.target.value;
         const targetEl = document.getElementById(target);
-        if (isBtn) targetEl.style.display = val ? "block" : "none";
-        else targetEl.innerText = val || (id === 'in-n' ? "Name Preview" : "Bio Preview...");
         
-        // Update character count display if label exists
+        if (isBtn) {
+            targetEl.style.display = val ? "block" : "none";
+        } else {
+            targetEl.innerText = val || (id === 'in-n' ? "Name Preview" : "Bio Preview...");
+            // FIX: Prevent long words from flowing outside the container
+            targetEl.style.wordBreak = "break-word";
+            targetEl.style.overflowWrap = "break-word";
+        }
+        
+        // Update character count display in the label
         const label = el.previousElementSibling;
         if (label && label.classList.contains('lim')) {
             const max = el.getAttribute('maxlength');
@@ -90,5 +97,3 @@ document.getElementById('upload-key').onchange = (e) => {
     };
     reader.readAsText(file);
 };
-
-
