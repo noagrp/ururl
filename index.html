@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrURL | Creator Dashboard</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="qr.js"></script>
+    <script src="ururl-core.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <section class="creator-side">
+        <h1>UrURL</h1>
+        <p style="margin-bottom: 20px;">Create your secure, suitcase-based profile.</p>
+        
+        <div style="margin-bottom: 20px;">
+            <button class="main-btn" style="background:#e2e8f0; color:#333;" onclick="document.getElementById('key-upload').click()">+ Upload Key.txt</button>
+            <input type="file" id="key-upload" style="display:none">
+        </div>
+
+        <form id="profile-form">
+            <input type="text" id="in-n" placeholder="Full Name" maxlength="30">
+            <input type="text" id="in-p" placeholder="Photo URL">
+            <textarea id="in-b" placeholder="Short Bio (Max 120 characters)" maxlength="120"></textarea>
+            <input type="text" id="in-l" placeholder="Main Link (https://...)">
+            <input type="email" id="in-e" placeholder="Email Address">
+            <input type="text" id="in-c" placeholder="Contact Number">
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <input type="password" id="in-k" placeholder="4-Digit PIN" maxlength="4">
+                <input type="text" id="in-w" placeholder="Recovery Word">
+            </div>
+
+            <button type="button" id="btn-generate" class="main-btn">GENERATE URURL</button>
+        </form>
+    </section>
+
+    <section class="preview-side">
+        <div class="phone-mockup">
+            <div id="preview-frame" style="height:100%;">
+                <div style="background:var(--navy); height:200px; padding:20px; text-align:center; color:white;">
+                    <div id="pre-img" style="width:80px; height:80px; background:var(--cyan); border-radius:50%; margin: 0 auto 10px;"></div>
+                    <h2 id="pre-n">Your Name</h2>
+                </div>
+                <div style="padding:20px; text-align:center;">
+                    <p id="pre-b">Your bio will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="qr-editor-overlay" class="hidden">
+    <div class="qr-modal">
+        <h2>Your UrURL is Ready</h2>
+        <div id="qr-canvas" style="margin: 20px 0;"></div>
+        <button id="dl-qr" class="main-btn" style="margin-bottom:10px;">Download QR PNG</button>
+        <button id="dl-key" class="main-btn" style="background:#333;">Download Key.txt</button>
+        <p onclick="location.reload()" style="margin-top:15px; cursor:pointer; font-size:12px; text-decoration:underline;">Create New</p>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

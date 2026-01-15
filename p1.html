@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrURL Profile</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="ururl-core.js"></script>
+    <style>
+        /* Profile-Specific Styles */
+        .header-locked {
+            background: var(--navy);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--cyan);
+        }
+        .executive-avatar {
+            width: 120px; height: 120px;
+            border: 4px solid var(--cyan);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+        .content-area {
+            padding: 30px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .action-btn {
+            display: block;
+            width: 100%;
+            background: var(--white);
+            color: var(--navy);
+            border: 2px solid var(--navy);
+            padding: 15px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .action-btn:hover {
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-locked">
+        <div id="display-photo" class="executive-avatar"></div>
+        <h1 id="display-name" style="margin-bottom:10px;">User Name</h1>
+        <p id="display-bio" style="font-size: 0.9em; opacity: 0.8;">User biography goes here.</p>
+    </header>
+
+    <div class="content-area">
+        <a href="#" id="btn-link" class="action-btn">VISIT WEBSITE</a>
+        <a href="#" id="btn-email" class="action-btn">SEND EMAIL</a>
+        <a href="#" id="btn-call" class="action-btn">CONTACT NOW</a>
+    </div>
+
+    <footer style="text-align:center; padding:40px; opacity:0.5; font-size:12px;">
+        <p>POWERED BY <strong>UrURL</strong></p>
+        <div id="edit-lock" style="margin-top:20px; cursor:pointer;">🔒 Admin Edit</div>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const suitcase = params.get('d');
+            if (!suitcase) return;
+
+            const data = UrURL.unpack(suitcase);
+            if (!data) return;
+
+            // Apply Data
+            document.getElementById('display-name').innerText = data.name;
+            document.getElementById('display-bio').innerText = data.bio;
+            if (data.photo) document.getElementById('display-photo').style.backgroundImage = `url('${data.photo}')`;
+            
+            // Set Actions
+            document.getElementById('btn-link').href = data.link;
+            document.getElementById('btn-email').href = `mailto:${data.email}`;
+            document.getElementById('btn-call').href = `tel:${data.contact}`;
+
+            // PIN Edit Security
+            document.getElementById('edit-lock').onclick = () => {
+                const pin = prompt("Enter 4-Digit PIN to Edit:");
+                if (pin === data.pin) {
+                    window.location.href = `index.html`; // In a real update, we'd pass the suitcase back
+                    alert("PIN Verified. Please upload your Key.txt on the home page to edit.");
+                } else {
+                    alert("Incorrect PIN.");
+                }
+            };
+        };
+    </script>
+</body>
+</html>

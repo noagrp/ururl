@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UrURL | Redirecting...</title>
+    <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const suitcase = params.get('d');
+            const template = params.get('t') || '1'; // Default to p1
+
+            if (suitcase) {
+                // Instantly send to the profile page with the data
+                window.location.href = `p${template}.html?d=${suitcase}`;
+            } else {
+                window.location.href = 'index.html';
+            }
+        };
+    </script>
+</head>
+<body style="font-family:Arial, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh;">
+    <p>Loading UrURL Profile...</p>
+</body>
+</html>
