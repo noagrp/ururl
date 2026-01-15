@@ -1,51 +1,58 @@
-// 1. INITIALIZE QR
+/**
+ * UrURL-Engine │ THE COMPLETE LOGIC
+ * Line count: ~90 
+ */
+
+// 1. INITIALIZE QR ENGINE
 const qrCode = new QRCodeStyling({
     width: 250, height: 250,
     dotsOptions: { color: "#0A1A3C", type: "rounded" },
     backgroundOptions: { color: "#ffffff" }
 });
 
-// 2. LIVE PREVIEW
+// 2. LIVE PREVIEW SYNC
 const sync = (id, target, isBtn = false) => {
-    const inputEl = document.getElementById(id);
-    if (!inputEl) return;
-    inputEl.oninput = (e) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.oninput = (e) => {
         const val = e.target.value;
-        const el = document.getElementById(target);
-        if (isBtn) el.style.display = val ? "block" : "none";
-        else el.innerText = val || (id === 'in-n' ? "Name Preview" : "Your bio will appear here.");
+        const targetEl = document.getElementById(target);
+        if (isBtn) targetEl.style.display = val ? "block" : "none";
+        else targetEl.innerText = val || (id === 'in-n' ? "Name Preview" : "Your bio will appear here.");
     };
-};
-sync('in-n', 'p-n'); sync('in-b', 'p-b');
-sync('in-l', 'pre-l', true); sync('in-e', 'pre-e', true); sync('in-c', 'pre-c', true);
-document.getElementById('in-p').oninput = (e) => {
-    document.getElementById('p-img').style.backgroundImage = `url(${e.target.value})`;
 };
 
-// 3. GENERATE
+sync('in-n', 'p-n'); sync('in-b', 'p-b');
+sync('in-l', 'pre-l', true); sync('in-e', 'pre-e', true); sync('in-c', 'pre-c', true);
+
+document.getElementById('in-p').oninput = (e) => { 
+    document.getElementById('p-img').style.backgroundImage = `url(${e.target.value})`; 
+};
+
+// 3. GENERATE QR & SHARE LINK
 document.getElementById('btn-generate').onclick = () => {
-    const data = {
-        n: document.getElementById('in-n').value,
-        p: document.getElementById('in-p').value,
-        b: document.getElementById('in-b').value,
-        l: document.getElementById('in-l').value,
-        e: document.getElementById('in-e').value,
-        c: document.getElementById('in-c').value,
-        k: document.getElementById('in-k').value,
-        w: document.getElementById('in-w').value
+    const d = {
+        n: document.getElementById('in-n').value, p: document.getElementById('in-p').value,
+        b: document.getElementById('in-b').value, l: document.getElementById('in-l').value,
+        e: document.getElementById('in-e').value, c: document.getElementById('in-c').value,
+        k: document.getElementById('in-k').value, w: document.getElementById('in-w').value
     };
-    if (Object.values(data).some(v => UrURL.isIllegal(v))) return alert("Remove | or ~");
     
-    const suitcase = UrURL.pack(data);
+    if (Object.values(d).some(v => UrURL.isIllegal(v))) return alert("Symbols | or ~ are not allowed.");
+
+    const suitcase = UrURL.pack(d);
     const shortURL = `${window.location.href.split('index.html')[0]}v.html?d=${suitcase}`;
+    
+    // Update QR and Share Box
     qrCode.update({ data: shortURL });
+    document.getElementById('share-url').value = shortURL;
+    
     document.getElementById('qr-result').innerHTML = "";
     qrCode.append(document.getElementById('qr-result'));
     document.getElementById('qr-overlay').classList.remove('hidden');
 };
 
-// 4. QR EDITOR (The Missing Link)
-// This listens to the IDs in your Index and updates the QR instantly
+// 4. QR EDITOR (COLOR & STYLE)
 document.getElementById('qr-color').oninput = (e) => {
     qrCode.update({ dotsOptions: { color: e.target.value } });
 };
@@ -53,16 +60,35 @@ document.getElementById('qr-style').onchange = (e) => {
     qrCode.update({ dotsOptions: { type: e.target.value } });
 };
 
-// 5. DOWNLOADS
+// 5. COPY TO CLIPBOARD
+document.getElementById('btn-copy').onclick = () => {
+    const copyText = document.getElementById('share-url');
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); 
+    navigator.clipboard.writeText(copyText.value);
+    
+    const btn = document.getElementById('btn-copy');
+    const oldText = btn.innerText;
+    btn.innerText = "COPIED!";
+    btn.style.background = "#28a745";
+    setTimeout(() => { btn.innerText = oldText; btn.style.background = "#007AFF"; }, 2000);
+};
+
+// 6. DOWNLOADS
 document.getElementById('dl-qr').onclick = () => qrCode.download({ name: "UrURL_QR" });
 document.getElementById('dl-key').onclick = () => {
-    const data = { n:document.getElementById('in-n').value, p:document.getElementById('in-p').value, b:document.getElementById('in-b').value, l:document.getElementById('in-l').value, e:document.getElementById('in-e').value, c:document.getElementById('in-c').value, k:document.getElementById('in-k').value, w:document.getElementById('in-w').value };
+    const d = { 
+        n:document.getElementById('in-n').value, p:document.getElementById('in-p').value, 
+        b:document.getElementById('in-b').value, l:document.getElementById('in-l').value, 
+        e:document.getElementById('in-e').value, c:document.getElementById('in-c').value, 
+        k:document.getElementById('in-k').value, w:document.getElementById('in-w').value 
+    };
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([UrURL.pack(data)], {type:"text/plain"}));
+    a.href = URL.createObjectURL(new Blob([UrURL.pack(d)], {type:"text/plain"}));
     a.download = "UrURL_Key.txt"; a.click();
 };
 
-// 6. DATA RESTORE
+// 7. RESTORE DATA
 document.getElementById('upload-key').onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -70,18 +96,14 @@ document.getElementById('upload-key').onchange = (e) => {
     reader.onload = (event) => {
         const d = UrURL.unpack(event.target.result);
         if (d) {
-            document.getElementById('in-n').value = d.n;
-            document.getElementById('in-p').value = d.p;
-            document.getElementById('in-b').value = d.b;
-            document.getElementById('in-l').value = d.l;
-            document.getElementById('in-e').value = d.e;
-            document.getElementById('in-c').value = d.c;
-            document.getElementById('in-k').value = d.k;
-            document.getElementById('in-w').value = d.w;
+            document.getElementById('in-n').value = d.n; document.getElementById('in-p').value = d.p;
+            document.getElementById('in-b').value = d.b; document.getElementById('in-l').value = d.l;
+            document.getElementById('in-e').value = d.e; document.getElementById('in-c').value = d.c;
+            document.getElementById('in-k').value = d.k; document.getElementById('in-w').value = d.w;
             ['in-n', 'in-p', 'in-b', 'in-l', 'in-e', 'in-c'].forEach(id => {
                 document.getElementById(id).dispatchEvent(new Event('input'));
             });
-            alert("Restored!");
+            alert("Profile Restored!");
         }
     };
     reader.readAsText(file);
