@@ -14,15 +14,19 @@ const sync = (id, target, isBtn = false) => {
         const targetEl = document.getElementById(target);
         
         if (isBtn) {
-            targetEl.style.display = val ? "block" : "none";
+            // If the input has text, remove 'hidden' and show block
+            if (val.trim() !== "") {
+                targetEl.classList.remove('hidden');
+                targetEl.style.display = "block";
+            } else {
+                targetEl.classList.add('hidden');
+                targetEl.style.display = "none";
+            }
         } else {
             targetEl.innerText = val || (id === 'in-n' ? "Name Preview" : "Bio Preview...");
-            // FIX: Prevent long words from flowing outside the container
-            targetEl.style.wordBreak = "break-word";
-            targetEl.style.overflowWrap = "break-word";
         }
         
-        // Update character count display in the label
+        // Character count display logic
         const label = el.previousElementSibling;
         if (label && label.classList.contains('lim')) {
             const max = el.getAttribute('maxlength');
@@ -97,3 +101,4 @@ document.getElementById('upload-key').onchange = (e) => {
     };
     reader.readAsText(file);
 };
+
