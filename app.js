@@ -142,4 +142,32 @@ document.getElementById('qr-color').oninput = (e) => {
 
 document.getElementById('qr-style').onchange = (e) => {
     qrCode.update({ dotsOptions: { type: e.target.value } });
+
+};
+document.getElementById('upload-key').onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const d = UrURL.unpack(event.target.result);
+        if (d) {
+            document.getElementById('in-n').value = d.n || "";
+            document.getElementById('in-p').value = d.p || "";
+            document.getElementById('in-b').value = d.b || "";
+            document.getElementById('in-l').value = d.l || "";
+            document.getElementById('in-e').value = d.e || "";
+            document.getElementById('in-c').value = d.c || "";
+            document.getElementById('in-k').value = d.k || "";
+            document.getElementById('in-w').value = d.w || "";
+            
+            // Trigger preview refresh
+            ['in-n', 'in-p', 'in-b', 'in-l', 'in-e', 'in-c'].forEach(id => {
+                document.getElementById(id).dispatchEvent(new Event('input'));
+            });
+            alert("Data Restored! You can now edit.");
+        } else {
+            alert("Invalid Key File.");
+        }
+    };
+    reader.readAsText(file);
 };
