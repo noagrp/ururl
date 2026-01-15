@@ -12,6 +12,16 @@
         #p-b { color: #666; margin-bottom: 30px; line-height: 1.5; white-space: pre-wrap; font-size: 15px; }
         .action-btn { display: none; background: #0A1A3C; color: white; padding: 16px; margin-bottom: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; }
         .action-btn:active { transform: scale(0.97); }
+        #p-n, #p-b {
+    /* This forces long words to break and wrap to the next line */
+    inline-size: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    
+    /* Ensures the container doesn't grow wider than the screen */
+    max-width: 100%;
+    box-sizing: border-box;
+}
     </style>
 </head>
 <body>
@@ -65,4 +75,5 @@
 </script>
 </body>
 </html>
+
 
