@@ -12,27 +12,49 @@
     <div class="container">
         <section class="creator-side">
             <h1>UrURL Creator</h1>
-            <p style="margin-bottom:20px; color:#666;">Enter details to build your digital identity.</p>
+            <p style="margin-bottom:20px; color:#666;">Build your digital identity.</p>
             
-            <div style="margin-bottom: 20px; padding: 15px; border: 2px dashed #007AFF; border-radius: 8px; background: #f0f7ff;">
-                <label style="font-size: 12px; display: block; margin-bottom: 5px; font-weight: bold; color: #007AFF;">EDIT EXISTING PROFILE (Upload Key.txt):</label>
-                <input type="file" id="upload-key" accept=".txt" style="font-size: 12px; cursor: pointer;">
+            <div style="margin-bottom:20px; padding:15px; border:2px dashed #007AFF; border-radius:8px; background:#f0f7ff;">
+                <label style="font-size:11px; display:block; margin-bottom:5px; font-weight:bold; color:#007AFF;">RESTORE/EDIT PROFILE:</label>
+                <input type="file" id="upload-key" accept=".txt" style="font-size:12px;">
             </div>
             
             <div id="form-container">
-                <input type="text" id="in-n" placeholder="Full Name">
-                <input type="text" id="in-p" placeholder="Photo URL (Direct Link)">
-                <textarea id="in-b" placeholder="Bio (Use │ instead of |)"></textarea>
-                <input type="text" id="in-l" placeholder="Website Link">
-                <input type="email" id="in-e" placeholder="Email Address">
-                <input type="text" id="in-c" placeholder="Contact Number">
+                <label class="lim">Name (25)</label>
+                <input type="text" id="in-n" placeholder="Full Name" maxlength="25">
+                
+                <label class="lim">Photo URL (100)</label>
+                <input type="text" id="in-p" placeholder="Direct Image Link" maxlength="100">
+                
+                <label class="lim">Bio (120)</label>
+                <textarea id="in-b" placeholder="Professional Bio..." maxlength="120"></textarea>
+                
+                <label class="lim">Website (100)</label>
+                <input type="text" id="in-l" placeholder="https://yourlink.com" maxlength="100">
                 
                 <div style="display:flex; gap:10px;">
-                    <input type="password" id="in-k" placeholder="4-Digit PIN" maxlength="4">
-                    <input type="text" id="in-w" placeholder="Secret Word">
+                    <div style="flex:1;">
+                        <label class="lim">Email (40)</label>
+                        <input type="email" id="in-e" placeholder="Email" maxlength="40">
+                    </div>
+                    <div style="flex:1;">
+                        <label class="lim">Phone (15)</label>
+                        <input type="text" id="in-c" placeholder="Contact" maxlength="15">
+                    </div>
+                </div>
+                
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                    <div style="flex:1;">
+                        <label class="lim">PIN (4)</label>
+                        <input type="password" id="in-k" placeholder="****" maxlength="4">
+                    </div>
+                    <div style="flex:1;">
+                        <label class="lim">Secret Word (15)</label>
+                        <input type="text" id="in-w" placeholder="Hint" maxlength="15">
+                    </div>
                 </div>
 
-                <button id="btn-generate" class="main-btn">GENERATE & STYLE QR</button>
+                <button id="btn-generate" class="main-btn" style="margin-top:20px;">GENERATE QR</button>
             </div>
         </section>
 
@@ -43,7 +65,7 @@
                     <h3 id="p-n">Name Preview</h3>
                 </div>
                 <div class="p-body">
-                    <p id="p-b" style="font-size:13px; color:#777; margin-bottom:15px;">Your bio will appear here.</p>
+                    <p id="p-b" style="font-size:13px; color:#777; margin-bottom:15px;">Bio Preview...</p>
                     <div id="pre-l" class="pre-btn hidden">🌐 WEBSITE</div>
                     <div id="pre-e" class="pre-btn hidden">📧 EMAIL</div>
                     <div id="pre-c" class="pre-btn hidden">📞 CONTACT</div>
@@ -54,39 +76,25 @@
 
     <div id="qr-overlay" class="hidden">
         <div class="modal">
-            <h3>Style & Share</h3>
+            <h3>Share Profile</h3>
             <div id="qr-result" style="margin:20px 0;"></div>
+            <input type="text" id="share-url" readonly style="width:100%; font-size:12px; padding:10px; border-radius:4px; border:1px solid #ddd; margin-bottom:10px;">
+            <button id="btn-copy" class="main-btn">COPY LINK</button>
             
-            <div style="margin-bottom: 15px; text-align: left;">
-                <label style="font-size:10px; font-weight: bold; display:block; margin-bottom: 5px;">PROFILE LINK:</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="share-url" readonly style="flex:1; font-size:12px; padding:10px; border:1px solid #ddd; border-radius:4px; background:#f9f9f9;">
-                    <button id="btn-copy" style="padding:0 15px; background:#007AFF; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">COPY</button>
-                </div>
-            </div>
-            
-            <div style="display:flex; gap:10px; margin-bottom:15px;">
-                <div style="flex:1;">
-                    <label style="font-size:10px; display:block; text-align:left;">QR Color</label>
-                    <input type="color" id="qr-color" value="#0A1A3C" style="height:40px; padding:2px; cursor:pointer; width: 100%;">
-                </div>
-                <div style="flex:1;">
-                    <label style="font-size:10px; display:block; text-align:left;">Dot Style</label>
-                    <select id="qr-style" style="width: 100%; height: 40px;">
-                        <option value="rounded">Rounded</option>
-                        <option value="dots">Dots</option>
-                        <option value="extra-rounded">Extra-Rounded</option>
-                        <option value="squares">Squares</option>
-                    </select>
-                </div>
+            <div style="display:flex; gap:10px; margin:15px 0;">
+                <input type="color" id="qr-color" value="#0A1A3C" style="flex:1; height:40px;">
+                <select id="qr-style" style="flex:1;">
+                    <option value="rounded">Rounded</option>
+                    <option value="dots">Dots</option>
+                    <option value="squares">Squares</option>
+                </select>
             </div>
 
-            <button id="dl-qr" class="main-btn" style="margin-bottom:8px;">DOWNLOAD QR (PNG)</button>
-            <button id="dl-key" class="main-btn" style="background:#444;">DOWNLOAD KEY (.TXT)</button>
-            <p onclick="location.reload()" style="margin-top:15px; cursor:pointer; font-size:12px; text-decoration:underline;">Close & Reset</p>
+            <button id="dl-qr" class="main-btn" style="background:#007AFF;">DOWNLOAD QR</button>
+            <button id="dl-key" class="main-btn" style="background:#444; margin-top:5px;">DOWNLOAD KEY</button>
+            <p onclick="location.reload()" style="margin-top:15px; cursor:pointer; font-size:12px; text-decoration:underline;">Close</p>
         </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
