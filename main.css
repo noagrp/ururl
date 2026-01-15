@@ -1,0 +1,47 @@
+:root {
+    --navy: #0A1A3C;
+    --cyan: #00E8FF;
+    --white: #FFFFFF;
+    --bg: #F0F4F8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+
+body { background: var(--bg); color: #333; }
+
+.container { display: flex; flex-wrap: wrap; min-height: 100vh; }
+
+/* Dashboard Sides */
+.creator-side { flex: 1; padding: 40px; background: white; min-width: 350px; }
+.preview-side { flex: 1; padding: 40px; background: var(--navy); display: flex; justify-content: center; align-items: center; }
+
+/* Inputs */
+input, textarea {
+    width: 100%; padding: 12px; margin-bottom: 10px;
+    border: 2px solid #ddd; border-radius: 4px;
+}
+input:focus { border-color: var(--cyan); outline: none; }
+
+.main-btn {
+    background: var(--navy); color: var(--cyan); padding: 15px;
+    border: none; border-radius: 4px; width: 100%; font-weight: bold; cursor: pointer;
+}
+
+/* Phone Mockup */
+.phone {
+    width: 300px; height: 580px; background: white; border: 8px solid #333;
+    border-radius: 25px; overflow: hidden; position: relative;
+}
+
+/* QR Editor Modal */
+#qr-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal {
+    background: white; padding: 25px; border-radius: 12px; 
+    max-width: 450px; width: 90%; text-align: center;
+}
+.hidden { display: none !important; }
+
+.qr-controls { margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }

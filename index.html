@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrURL | Dashboard</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="qr.js"></script>
+    <script src="ururl-core.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <section class="creator-side">
+        <h1 style="color:var(--navy); margin-bottom:10px;">UrURL</h1>
+        <p style="margin-bottom:20px; font-size:14px;">Serverless Profile Generator</p>
+        
+        <button class="main-btn" style="background:#f0f0f0; color:#333; margin-bottom:20px;" onclick="document.getElementById('file-input').click()">+ LOAD KEY.TXT</button>
+        <input type="file" id="file-input" style="display:none">
+
+        <form id="ururl-form">
+            <input type="text" id="in-n" placeholder="Full Name (Required)" required>
+            <input type="text" id="in-p" placeholder="Photo URL (https://...)">
+            <textarea id="in-b" placeholder="Short Bio" rows="3"></textarea>
+            <input type="text" id="in-l" placeholder="Website/Link">
+            <input type="email" id="in-e" placeholder="Email Address">
+            <input type="text" id="in-c" placeholder="Contact Number">
+            <div style="display:flex; gap:10px;">
+                <input type="password" id="in-k" placeholder="4-Digit PIN" maxlength="4">
+                <input type="text" id="in-w" placeholder="Secret Word">
+            </div>
+            <button type="button" id="btn-generate" class="main-btn">GENERATE & STYLE QR</button>
+        </form>
+    </section>
+
+    <section class="preview-side">
+        <div class="phone">
+            <div id="p-header" style="background:var(--navy); height:180px; color:white; text-align:center; padding-top:30px;">
+                <div id="p-img" style="width:80px; height:80px; border-radius:50%; border:3px solid var(--cyan); margin:0 auto 10px; background:#ccc; background-size:cover;"></div>
+                <h3 id="p-n">Name Preview</h3>
+            </div>
+            <div style="padding:20px; text-align:center;">
+                <p id="p-b" style="color:#666; font-size:14px;">Your bio will appear here...</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="qr-overlay" class="hidden">
+    <div class="modal">
+        <h2 style="color:var(--navy)">Style Your QR</h2>
+        <div id="qr-result" style="margin:20px auto; display:inline-block;"></div>
+        
+        <div class="qr-controls">
+            <div>
+                <label style="font-size:12px;">Dot Color</label>
+                <input type="color" id="qr-dot-color" value="#0A1A3C">
+            </div>
+            <div>
+                <label style="font-size:12px;">Dot Style</label>
+                <select id="qr-dot-type" style="width:100%; padding:5px;">
+                    <option value="rounded">Rounded</option>
+                    <option value="dots">Dots</option>
+                    <option value="extra-rounded">Extra-Rounded</option>
+                    <option value="squares">Squares</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="margin-top:20px;">
+            <button id="dl-qr" class="main-btn" style="margin-bottom:10px;">DOWNLOAD QR (.PNG)</button>
+            <button id="dl-key" class="main-btn" style="background:#333;">DOWNLOAD KEY (.TXT)</button>
+        </div>
+        <p onclick="location.reload()" style="margin-top:15px; cursor:pointer; font-size:12px; text-decoration:underline;">Start Over</p>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
