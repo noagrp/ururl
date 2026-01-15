@@ -27,33 +27,42 @@
         </div>
     </div>
 
-    <script>
-        // 1. Pull the data out of storage
-        const raw = sessionStorage.getItem('profileData');
+    <script src="ururl-core.js"></script>
+
+<script>
+    window.onload = () => {
+        // 1. Get data directly from the URL
+        const suitcase = new URLSearchParams(window.location.search).get('d');
         
-        if (raw) {
-            const d = JSON.parse(raw);
+        if (suitcase) {
+            const d = UrURL.unpack(suitcase);
             
-            // 2. Map data to the Design (n=Name, b=Bio, p=Photo)
-            document.getElementById('p-n').innerText = d.n;
-            document.getElementById('p-b').innerText = d.b;
-            if (d.p) document.getElementById('p-img').style.backgroundImage = `url(${d.p})`;
+            if (d) {
+                // 2. Render Name, Bio, Photo
+                document.getElementById('p-n').innerText = d.n || "";
+                document.getElementById('p-b').innerText = d.b || "";
+                if (d.p) document.getElementById('p-img').style.backgroundImage = `url(${d.p})`;
 
-            // 3. Helper to show buttons only if data exists (l=Link, e=Email, c=Contact)
-            const showBtn = (id, val, href) => {
-                if (val && val.trim() !== "") {
-                    const el = document.getElementById(id);
-                    el.style.display = "block";
-                    el.href = href;
-                }
-            };
+                // 3. Helper for buttons
+                const showBtn = (id, val, href) => {
+                    if (val && val.trim() !== "") {
+                        const el = document.getElementById(id);
+                        el.style.display = "block";
+                        el.href = href;
+                    }
+                };
 
-            showBtn('lnk-l', d.l, d.l);
-            showBtn('lnk-e', d.e, `mailto:${d.e}`);
-            showBtn('lnk-c', d.c, `tel:${d.c}`);
-        } else {
-            window.location.href = "index.html"; // Redirect home if no data
+                showBtn('lnk-l', d.l, d.l);
+                showBtn('lnk-e', d.e, `mailto:${d.e}`);
+                showBtn('lnk-c', d.c, `tel:${d.c}`);
+                return; // Stop here if successful
+            }
         }
-    </script>
+        
+        // If everything fails, go to index
+        window.location.href = "index.html";
+    };
+</script>
 </body>
 </html>
+
