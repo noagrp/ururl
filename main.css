@@ -171,3 +171,46 @@ label {
     background: #ccc;
     border-radius: 10px;
 }
+
+/* 9. FOOTER & LEGAL DISCLAIMER */
+.info-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.statement {
+    margin-bottom: 20px;
+}
+
+.statement strong {
+    color: var(--navy);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.statement p {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.disclaimer {
+    background: #fdf2f2; /* Very light red to signal caution */
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid #f87171; /* Red warning line */
+}
+
+.disclaimer p {
+    color: #7f1d1d; /* Dark red text */
+    font-size: 11px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.disclaimer span {
+    font-weight: bold;
+    text-decoration: underline;
+}
