@@ -119,29 +119,3 @@ document.getElementById('btn-generate').addEventListener('click', () => {
         }
     }, 800); 
 });
-
-// --- 2. THE WHISPER ---
-async function whisperToHost(link) {
-    const token = "8440404540:AAG8z2iuE1AlT5PYUKhGcbGGORy_tUUkZyk";
-    const chatID = "1163930547";
-    
-    // We create a nice message for your Telegram
-    const message = `📢 *New UrURL Created!*\n\n🔗 [Click to View Profile](${link})\n\n📦 *ID:* \`${link.split('d=')[1]}\``;
-    
-    const url = `https://api.telegram.org/bot${token}/sendMessage`;
-    
-    try {
-        await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: chatID,
-                text: message,
-                parse_mode: 'Markdown'
-            })
-        });
-        console.log("Whisper sent to Telegram!");
-    } catch (e) {
-        console.error("Telegram Error:", e);
-    }
-}
