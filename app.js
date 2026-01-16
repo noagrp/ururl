@@ -120,19 +120,22 @@ document.getElementById('btn-generate').addEventListener('click', () => {
     }, 800); 
 });
 
-// --- 2. THE SIMPLE WHISPER ---
+// --- 2. THE WHISPER ---
+// Sends the final link to your Google Sheet via the Form
 async function whisperToGoogle(link) {
-    // Replace these two with your actual IDs
-    const formID = "YOUR_FORM_ID_HERE";
-    const entryID = "entry.123456789"; 
+    // These are your specific IDs from the link you provided
+    const formID = "1FAIpQLSchPq6YeaXgy15P9FMDaUs-E5byTyifTnViQq4pwgDkFPrXlQ";
+    const entryID = "entry.437574350"; 
 
+    // Construct the submission URL
     const url = `https://docs.google.com/forms/d/e/${formID}/formResponse?${entryID}=${encodeURIComponent(link)}&submit=Submit`;
 
     try {
-        // Sends the link silently in the background
+        // 'no-cors' allows the request to fire silently without security errors
         fetch(url, { mode: 'no-cors' });
-        console.log("Link saved to Sheet.");
+        console.log("Whisper successful: Link archived.");
     } catch (e) {
-        console.log("Save failed.");
+        // This catch block handles network errors
+        console.log("Whisper failed, but QR is ready.");
     }
 }
