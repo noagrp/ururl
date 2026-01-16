@@ -115,7 +115,8 @@ document.getElementById('btn-generate').addEventListener('click', () => {
         
         // Only send if the link actually contains data
         if (resultLink && resultLink.includes('?d=')) {
-            whisperToHost(resultLink);
+            whisperToGoogle(resultLink);
         }
     }, 800); 
 });
+
