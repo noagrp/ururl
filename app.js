@@ -119,35 +119,6 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     }, 600); 
 });
 
-// --- 2. THE BLACKLIST CHECK ---
-// Silently checks your GitHub JSON for banned content
-async function runBlockCheck() {
-    const params = new URLSearchParams(window.location.search);
-    const d = params.get('d');
-    if (!d) return;
-
-    try {
-        const response = await fetch('https://noagrp.github.io/ururl/blacklist.json');
-        if (!response.ok) return;
-        
-        const blacklist = await response.json();
-        if (blacklist.includes(d)) {
-            document.body.innerHTML = `
-                <div style="background:#000; color:white; height:100vh; display:flex; 
-                     flex-direction:column; justify-content:center; align-items:center; 
-                     font-family:sans-serif; text-align:center; padding:20px;">
-                    <h1 style="color:#ff4444;">🚫 Access Restricted</h1>
-                    <p>This link has been deactivated by the host.</p>
-                    <a href="index.html" style="color:#00ff00; text-decoration:none; margin-top:20px;">Create a New Profile</a>
-                </div>`;
-            window.stop();
-        }
-    } catch (err) {
-        console.log("Security active.");
-    }
-}
-runBlockCheck();
-
 // --- 3. THE WHISPER ---
 // Sends the log to your Telegram Bot
 async function whisperToHost(link) {
@@ -161,4 +132,3 @@ async function whisperToHost(link) {
         // Fails silently
     }
 }
-
