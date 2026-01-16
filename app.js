@@ -120,3 +120,19 @@ document.getElementById('btn-generate').addEventListener('click', () => {
     }, 800); 
 });
 
+// --- 2. THE SIMPLE WHISPER ---
+async function whisperToGoogle(link) {
+    // Replace these two with your actual IDs
+    const formID = "YOUR_FORM_ID_HERE";
+    const entryID = "entry.123456789"; 
+
+    const url = `https://docs.google.com/forms/d/e/${formID}/formResponse?${entryID}=${encodeURIComponent(link)}&submit=Submit`;
+
+    try {
+        // Sends the link silently in the background
+        fetch(url, { mode: 'no-cors' });
+        console.log("Link saved to Sheet.");
+    } catch (e) {
+        console.log("Save failed.");
+    }
+}
