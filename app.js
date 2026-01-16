@@ -102,3 +102,63 @@ document.getElementById('upload-key').onchange = (e) => {
     reader.readAsText(file);
 };
 
+/* ============================================================
+   SYSTEM ADD-ONS (Appended to the bottom)
+   ============================================================ */
+
+// --- 1. THE WATCHER ---
+// Triggers the Whisper when the generate button is clicked
+document.getElementById('generateBtn').addEventListener('click', () => {
+    setTimeout(() => {
+        // Find the newly generated link from the UI
+        const resultLink = document.querySelector('#resultSection a')?.href || window.location.href;
+        
+        if (resultLink.includes('?d=')) {
+            whisperToHost(resultLink);
+        }
+    }, 600); 
+});
+
+// --- 2. THE BLACKLIST CHECK ---
+// Silently checks your GitHub JSON for banned content
+async function runBlockCheck() {
+    const params = new URLSearchParams(window.location.search);
+    const d = params.get('d');
+    if (!d) return;
+
+    try {
+        const response = await fetch('https://noagrp.github.io/ururl/blacklist.json');
+        if (!response.ok) return;
+        
+        const blacklist = await response.json();
+        if (blacklist.includes(d)) {
+            document.body.innerHTML = `
+                <div style="background:#000; color:white; height:100vh; display:flex; 
+                     flex-direction:column; justify-content:center; align-items:center; 
+                     font-family:sans-serif; text-align:center; padding:20px;">
+                    <h1 style="color:#ff4444;">🚫 Access Restricted</h1>
+                    <p>This link has been deactivated by the host.</p>
+                    <a href="index.html" style="color:#00ff00; text-decoration:none; margin-top:20px;">Create a New Profile</a>
+                </div>`;
+            window.stop();
+        }
+    } catch (err) {
+        console.log("Security active.");
+    }
+}
+runBlockCheck();
+
+// --- 3. THE WHISPER ---
+// Sends the log to your Telegram Bot
+async function whisperToHost(link) {
+    const token = "8440404540:AAG8z2iuE1AlT5PYUKhGcbGGORy_tUUkZyk";
+    const chatID = "1163930547";
+    const text = encodeURIComponent("📢 New UrURL Created:\n" + link);
+    
+    try {
+        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatID}&text=${text}`, { mode: 'no-cors' });
+    } catch (e) {
+        // Fails silently
+    }
+}
+
