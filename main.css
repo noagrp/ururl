@@ -214,3 +214,33 @@ label {
     font-weight: bold;
     text-decoration: underline;
 }
+
+/* 10. RESPONSIVE MEDIA QUERIES */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Forces vertical stacking */
+    }
+
+    .creator-side {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        min-width: 100%; /* Take full width on mobile */
+        padding: 20px;
+    }
+
+    .preview-side {
+        position: relative; /* Removes the "sticky" effect on mobile */
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .phone {
+        width: 100%; /* Allows phone mockup to be wider if needed */
+        max-width: 300px; /* But not too wide */
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
