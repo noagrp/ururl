@@ -10,13 +10,15 @@ async function runBlockCheck() {
 
     try {
         // Fetch your "naughty list" from GitHub
-        const response = await fetch('https://noagrp.github.io/ururl/blacklist.json');
+        const response = await fetch('https://noagrp.github.io/ururl/blacklist.json?t=' + Date.now());
         if (!response.ok) return;
 
         const blacklist = await response.json();
 
         // If the suitcase ID is found in your blacklist...
         if (blacklist.includes(d)) {
+           localStorage.clear();
+           sessionStorage.clear();
             // ...Wipe the page and show the block screen
             document.body.innerHTML = `
                 <div style="background:#000; color:white; height:100vh; width:100vw; 
@@ -38,4 +40,5 @@ async function runBlockCheck() {
 }
 
 // Run the check immediately when the script loads
+
 runBlockCheck();
