@@ -1,4 +1,4 @@
-const CACHE='ururl-v1';
+const CACHE='ururl-v2';
 const ASSETS=[
   './',
   './index.html',
@@ -11,7 +11,10 @@ const ASSETS=[
   './qr.js',
   './blacklist.json',
   './manifest.webmanifest',
-  './UrURL.png'
+  './favicon-32x32.png',
+  './apple-touch-icon.png',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install',event=>{
