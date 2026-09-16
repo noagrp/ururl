@@ -13,25 +13,26 @@
         <section class="creator-side">
             <h1>UrURL Creator</h1>
             <p style="margin-bottom:20px; color:#666;">Build your digital identity.</p>
-            
+
             <div style="margin-bottom:20px; padding:15px; border:2px dashed #007AFF; border-radius:8px; background:#f0f7ff;">
-                <label style="font-size:11px; display:block; margin-bottom:5px; font-weight:bold; color:#007AFF;">RESTORE/EDIT PROFILE:</label>
+                <label style="font-size:11px; display:block; margin-bottom:5px; font-weight:bold; color:#007AFF;">LOAD BACKUP:</label>
                 <input type="file" id="upload-key" accept=".txt" style="font-size:12px;">
+                <p style="font-size:11px; color:#64748b; line-height:1.45; margin:8px 0 0;">Loading a backup only refills this form. Generating again always creates a new URL and QR code.</p>
             </div>
-            
+
             <div id="form-container">
                 <label class="lim">Name (25)</label>
                 <input type="text" id="in-n" placeholder="Full Name" maxlength="25">
-                
+
                 <label class="lim">Photo URL (100)</label>
                 <input type="text" id="in-p" placeholder="Direct Image Link" maxlength="100">
-                
+
                 <label class="lim">Bio (120)</label>
                 <textarea id="in-b" placeholder="Professional Bio..." maxlength="120"></textarea>
-                
+
                 <label class="lim">Website (100)</label>
                 <input type="text" id="in-l" placeholder="https://yourlink.com" maxlength="100">
-                
+
                 <div style="display:flex; gap:10px;">
                     <div style="flex:1;">
                         <label class="lim">Email (40)</label>
@@ -42,37 +43,21 @@
                         <input type="text" id="in-c" placeholder="Contact" maxlength="15">
                     </div>
                 </div>
-                
-                <div style="display:flex; gap:10px; margin-top:10px;">
-                    <div style="flex:1;">
-                        <label class="lim">PIN (4)</label>
-                        <input type="password" id="in-k" placeholder="****" maxlength="4">
-                    </div>
-                    <div style="flex:1;">
-                        <label class="lim">Secret Word (15)</label>
-                        <input type="text" id="in-w" placeholder="Hint" maxlength="15">
-                    </div>
-                </div>
 
                 <button id="btn-generate" class="main-btn" style="margin-top:20px;">GENERATE QR</button>
             </div>
-            <div class="info-footer" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
-    <div class="statement" style="text-align: justify; margin-bottom: 20px;">
-        <strong style="display: block; margin-bottom: 5px; color: #0A1A3C;">UrURL acts as your lightweight online card.</strong>
-        <p style="font-size: 12px; color: #666; line-height: 1.6; margin: 0;">
-            We do not store your personal data on our side. All information is encoded directly into your unique URL, keeping your profile private and secure.
-        </p>
-    </div>
 
-    <div class="disclaimer" style="background: #fdf2f2; padding: 12px; border-radius: 8px; border-left: 3px solid #f87171;">
-        <p style="font-size: 11px; color: #7f1d1d; line-height: 1.5; text-align: justify; margin-bottom: 10px;">
-            <strong>Disclaimer:</strong> Created user-profiles may contain links to external websites. UrURL does not monitor, endorse, or bear any liability for the content on third-party sites. <span>Open external links at your own risk.</span>
-        </p>
-        <p style="font-size: 11px; color: #475569; line-height: 1.5; text-align: justify; margin: 0; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.1);">
-            <i class="icon">📝</i> <strong>Transparency Notice:</strong> To ensure platform safety, newly created URLs are logged for moderation purposes. If a link is reported for violating safety guidelines, it may be added to our blacklist.
-        </p>
-    </div>
-</div>
+            <div class="info-footer" style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+                <div class="statement" style="text-align:justify; margin-bottom:20px;">
+                    <strong style="display:block; margin-bottom:5px; color:#0A1A3C;">UrURL acts as your lightweight online card.</strong>
+                    <p style="font-size:12px; color:#666; line-height:1.6; margin:0;">Your profile data is encoded directly into the shared URL. Published UrURLs are immutable: to make changes, load a backup, modify the details, and generate a new URL and QR code.</p>
+                </div>
+
+                <div class="disclaimer" style="background:#fdf2f2; padding:12px; border-radius:8px; border-left:3px solid #f87171;">
+                    <p style="font-size:11px; color:#7f1d1d; line-height:1.5; text-align:justify; margin-bottom:10px;"><strong>Disclaimer:</strong> Created user-profiles may contain links to external websites. UrURL does not monitor, endorse, or bear any liability for the content on third-party sites. <span>Open external links at your own risk.</span></p>
+                    <p style="font-size:11px; color:#475569; line-height:1.5; text-align:justify; margin:0; padding-top:8px; border-top:1px dashed rgba(0,0,0,0.1);"><i class="icon">📝</i> <strong>Transparency Notice:</strong> Newly generated URLs are logged for moderation purposes. If a link is reported for violating safety guidelines, it may be added to our blacklist.</p>
+                </div>
+            </div>
         </section>
 
         <section class="preview-side">
@@ -97,7 +82,7 @@
             <div id="qr-result" style="margin:20px 0;"></div>
             <input type="text" id="share-url" readonly style="width:100%; font-size:12px; padding:10px; border-radius:4px; border:1px solid #ddd; margin-bottom:10px;">
             <button id="btn-copy" class="main-btn">COPY LINK</button>
-            
+
             <div style="display:flex; gap:10px; margin:15px 0;">
                 <input type="color" id="qr-color" value="#0A1A3C" style="flex:1; height:40px;">
                 <select id="qr-style" style="flex:1;">
@@ -108,13 +93,11 @@
             </div>
 
             <button id="dl-qr" class="main-btn" style="background:#007AFF;">DOWNLOAD QR</button>
-            <button id="dl-key" class="main-btn" style="background:#444; margin-top:5px;">DOWNLOAD KEY</button>
+            <button id="dl-key" class="main-btn" style="background:#444; margin-top:5px;">DOWNLOAD BACKUP</button>
+            <p style="font-size:11px; color:#666; line-height:1.45; margin:10px 0 0;">A backup can be loaded later to create a modified profile. It does not change this URL.</p>
             <p onclick="location.reload()" style="margin-top:15px; cursor:pointer; font-size:12px; text-decoration:underline;">Close</p>
         </div>
     </div>
     <script src="app.js"></script>
 </body>
 </html>
-
-
-
