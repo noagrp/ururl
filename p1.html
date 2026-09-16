@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#254f1a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="UrURL">
     <title>UrURL | Profile</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" href="UrURL.png">
+    <link rel="apple-touch-icon" href="UrURL.png">
     <style>
         body { 
             background: linear-gradient(-45deg, #1a3c11, #254f1a, #2d6a1f, #1a3c11);
@@ -68,7 +76,6 @@
             padding: 0 20px;
         }
 
-        /* --- THE SHINE & COLOR SHIFT BUTTONS --- */
         .action-btn { 
             display: none; 
             background: #d2e823; 
@@ -84,12 +91,10 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* Added colorShift to the animation list */
             animation: slideUp 0.5s ease forwards, colorShift 8s infinite alternate;
             opacity: 0;
         }
 
-        /* Routine Color Loop */
         @keyframes colorShift {
             0% { background: #d2e823; color: #254f1a; }
             50% { background: #b8cc1f; color: #1a3c11; }
@@ -185,7 +190,6 @@
                             const el = document.getElementById(btn.id);
                             el.style.display = "block";
                             el.href = btn.href;
-                            // Combined delays for Entrance, Shine, and Color Shift
                             el.style.animationDelay = `${delay}s, 0s, 0s`;
                             delay += 0.15;
                         }
@@ -195,8 +199,10 @@
             }
             window.location.href = "index.html";
         };
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+        }
     </script>
 </body>
 </html>
-
-
